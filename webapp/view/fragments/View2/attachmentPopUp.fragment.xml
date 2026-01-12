@@ -68,8 +68,8 @@
                         <ObjectStatus
                             id="idV2OS_popup"
                             title="PAF NO - {path:'LocalJSONModelForAttachment>Pafno',  formatter:'.formatter.removeLeadingZeros'}"
-                            text="Download attachment"
-                            press="onViewAttachmentObjectStatusPress1"
+                            text="View attachment"
+                            press="onViewAttachmentObjectStatusPress"
                             icon=""
                             active="true"
                         />

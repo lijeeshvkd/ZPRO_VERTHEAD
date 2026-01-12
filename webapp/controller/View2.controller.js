@@ -38,8 +38,6 @@ sap.ui.define([
                 this._rowIndex;
                 // Start: Attach001
                 this._mViewSettingsDialogs = {};
-                var dataModelForAttachments = this.getOwnerComponent().getModel("attachments").getData();
-                this.getView().setModel(new JSONModel(dataModelForAttachments), "LocalJSONModelForAttachment");
                 // End: Attach001
             },
 
@@ -558,59 +556,6 @@ sap.ui.define([
                 }
                 return pDialog;
             },
-
-            //Download Attachment
-            getFileType: function(sVal) {
-                //var sfileType = "application/pdf";
-                if (sVal === "PNG" || sVal=== "png") {
-                return "image/png";
-                } else if (sVal === "JPEG" || sVal=== "jpeg") {
-                return "image/jpeg";
-                }else if (sVal === "PLAIN" || sVal=== "plain") {
-                return "text/plain";
-                }else if (sVal === "xlsx" || sVal=== "msexcel") {
-                return "application/vnd.ms-excel";
-                }else {
-                return "application/pdf";
-                }
-            },
-
-            onViewAttachmentObjectStatusPress1: function(oEvent) {
-                var sFile = oEvent.getSource().getParent().getProperty("thumbnailUrl"),
-                sFileName = oEvent.getSource().getParent().getProperty("fileName"),
-                //oButton = oEvent.getSource();
-
-                fContent = atob(sFile),
-                byteNumbers = new Array(fContent.length),
-                fileExtension = sFileName.split('.').pop();
-                var fileType  = this.getFileType(fileExtension);
-                for (var i = 0; i < fContent.length; i++) {
-                    byteNumbers[i] = fContent.charCodeAt(i);
-                }
-
-                const byteArray = new Uint8Array(byteNumbers);
-                const blob = new Blob([byteArray], { type: fileType });
-
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement("a");
-                a.href = url;
-                a.download = "AttachFile." + fileExtension; //"file.pdf";
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-                URL.revokeObjectURL(url);
-
-                // var fileExtension = sFileName.split('.').pop();
-                // var fileNameExtract = sFileName.split(".")[0];
-                // var byteArray = new Uint8Array(byteNumbers),
-                //   blob = new Blob([byteArray], { type: fileType });
-                // if (blob) {
-                //   File.save(blob, fileNameExtract, fileExtension, fileType);
-                // } else {
-                //   console.error("File type not supported:", fileExtension);
-                // }
-            },
-
             getAttachments: function (pafID) {
                 // Attachments
                 var sPathUpload = "/ETFILE_UPLOAD_HSet('" + pafID + "')";
